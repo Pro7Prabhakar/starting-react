@@ -26,10 +26,14 @@ PokemonRow.propTypes = {
 const PokemonInfo = ({name, base}) => (  
   <div>
     <h2>{name.english}</h2>
-    <h2>{base.HP}</h2>
-    <h2>{base.Attack}</h2>
-    <h2>{base.Defense}</h2>
-    <h2>{base.Speed}</h2>  
+    <table>
+      {Object.keys(base).map(key => (
+        <tr key={key}>
+          <td>{key}</td>
+          <td>{base[key]}</td>
+        </tr>
+      ))}
+    </table>
   </div>
 );
 

@@ -5,11 +5,12 @@
 
 th {
   font-size: x-large;
+  text-align: left;
 }
 
-td {
+/* td {
   text-align: center;
-}
+} */
 
 input {
   width: 100%;
