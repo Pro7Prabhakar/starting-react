@@ -1,4 +1,3 @@
-import propType from 'prop-type';
 import './App.css';
 import pokemon from './pokemon.json';
 import PropTypes from "prop-types";
@@ -9,23 +8,48 @@ const PokemonRow = ({ pokemon, onSelect}) =>(
     <tr>
       <td>{pokemon.name.english}</td>
       <td>{pokemon.type.join(", ")}</td>
-      <td><button>Select</button></td>
+      <td><button 
+      onClick={() => onSelect(pokemon)}>Select!</button></td>
     </tr> 
 )
 
 PokemonRow.propTypes = {
   pokemon : PropTypes.shape({
     name : PropTypes.shape({
-      english : PropTypes.string,
+      english : PropTypes.string.isRequired,
     }),
-    type : PropTypes.arrayOf(PropTypes.string),
+    type : PropTypes.arrayOf(PropTypes.string.isRequired),
   }),
-  onSelect : PropTypes.func,
+  onSelect : PropTypes.func.isRequired,
+};
+
+const PokemonInfo = ({name, base}) => (  
+  <div>
+    <h2>{name.english}</h2>
+    <h2>{base.HP}</h2>
+    <h2>{base.Attack}</h2>
+    <h2>{base.Defense}</h2>
+    <h2>{base.Speed}</h2>  
+  </div>
+);
+
+PokemonInfo.propTypes = {
+  name : PropTypes.shape({
+    english : PropTypes.string.isRequired,
+  }),
+  base : PropTypes.shape({
+    HP: PropTypes.number.isRequired,
+    Attack: PropTypes.number.isRequired,
+    Defense: PropTypes.number.isRequired,
+    "Sp. Attack": PropTypes.number.isRequired,
+    "Sp. Defense": PropTypes.number.isRequired,
+    Speed: PropTypes.number.isRequired,
+  })
 }
 
 function App() {
   const [filter, filterSet] = useState("");
-  const [selectedItems, selectedItemsSet] = useState(null);
+  const [selectedItem, selectedItemSet] = useState(null);
 
   return (
     <div
@@ -59,16 +83,12 @@ function App() {
           {pokemon
           .filter((pokemon) => pokemon.name.english.toLowerCase().includes(filter.toLowerCase()))
           .slice(0, 20).map(pokemon => (
-          <PokemonRow pokemon={ pokemon } key={pokemon.id} />
+          <PokemonRow pokemon={ pokemon } key={pokemon.id} onSelect={(pokemon) => selectedItemSet(pokemon)} />
           ))}
         </tbody>
       </table>
       </div>
-        {selectedItems && (
-          <div>
-          <h2>{selectedItems.name.english}</h2>
-          </div>
-        )}
+        {selectedItem && <PokemonInfo {...selectedItem}/>}
         </div>
     </div>
   );
