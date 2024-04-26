@@ -2,6 +2,33 @@ import './App.css';
 import PropTypes from "prop-types";
 import React from 'react';
 import { useState, useEffect } from 'react';
+import styled from '@emotion/styled';
+
+const Title = styled.h1`
+  text-align: center;
+`;
+
+const TwoColumnLayout = styled.div`
+  display : grid;
+  grid-template-columns: 70% 30%;
+  grid-column-gap: 1rem;
+`;
+
+const Container = styled.div`
+  margin: auto;
+  padding-top: 1rem;
+  width: 800px;
+`;
+
+const Input = styled.input`
+  width: 100%;
+  font-size: large;
+  padding: 0.2rem;
+`;
+
+const Table = styled.table`
+  width : 100%;
+`;
 
 const PokemonRow = ({ pokemon, onSelect}) =>(
     <tr>
@@ -64,26 +91,14 @@ function App() {
   
 
   return (
-    <div
-    style={{
-      margin: 'auto',
-      paddingTop: '1rem',
-      width: 800,
-    }} 
-    >
-      <h1 className="title">Pokemon Search</h1>
-      <div
-      style={{
-        display : 'grid',
-        gridTemplateColumns: '70% 30%', 
-        columnGap: '1rem',
-      }} 
-      >
+    <Container>
+      <Title>Pokemon Search</Title>
+      <TwoColumnLayout>
         <div>
-      <input 
+      <Input 
       value={filter} onChange={(evt) => filterSet(evt.target.value)}
       />
-      <table width="100%">
+      <Table>
         <thead>
           <tr>
             <th>Name</th>
@@ -98,11 +113,11 @@ function App() {
           <PokemonRow pokemon={ pokemon } key={pokemon.id} onSelect={(pokemon) => selectedItemSet(pokemon)} />
           ))}
         </tbody>
-      </table>
+      </Table>
       </div>
         {selectedItem && <PokemonInfo {...selectedItem}/>}
-        </div>
-    </div>
+        </TwoColumnLayout>
+    </Container>
   );
 }
 
