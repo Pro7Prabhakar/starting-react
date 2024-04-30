@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import React from 'react';
 import { useState, useEffect } from 'react';
 import styled from '@emotion/styled';
+import { Button, TableCell } from '@mui/material';
 
 const Title = styled.h1`
   text-align: center;
@@ -34,8 +35,8 @@ const PokemonRow = ({ pokemon, onSelect}) =>(
     <tr>
       <td>{pokemon.name.english}</td>
       <td>{pokemon.type.join(", ")}</td>
-      <td><button 
-      onClick={() => onSelect(pokemon)}>Select!</button></td>
+      <td><Button variant="outlined" 
+      onClick={() => onSelect(pokemon)}>Select!</Button></td>
     </tr> 
 )
 
@@ -51,13 +52,15 @@ PokemonRow.propTypes = {
 
 const PokemonInfo = ({name, base}) => (  
   <div>
-    <h2>{name.english}</h2>
-    <table>
+    <h2 style={{paddingLeft: 15}}>{name.english}</h2>
+    <table><thead></thead>
       {Object.keys(base).map(key => (
-        <tr key={key}>
-          <td>{key}</td>
-          <td>{base[key]}</td>
+        <tbody key={key}>
+          <tr>
+          <TableCell>{key}</TableCell>
+          <TableCell>{base[key]}</TableCell>
         </tr>
+        </tbody>
       ))}
     </table>
   </div>
